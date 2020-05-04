@@ -1,4 +1,7 @@
 ﻿using Auth.Context;
+using Auth.CustomTokenProviders;
+using Auth.EmailService.Interfaces;
+using Auth.EmailService.Services;
 using Auth.Mapping;
 using Auth.Models;
 using AutoMapper;
@@ -11,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace API
 {
@@ -28,10 +32,35 @@ namespace API
         {
             services.AddDbContext<AplicationContext>(c => c.UseSqlServer(Configuration.GetConnectionString("MonitoriaSQLServer")));
 
-            services.AddIdentity<User, IdentityRole>()
-           .AddEntityFrameworkStores<AplicationContext>();
+           // services.AddIdentity<User, IdentityRole>()
+           //.AddEntityFrameworkStores<AplicationContext>();
+
+            services.AddIdentity<User, IdentityRole>(opt =>
+            {
+                opt.Password.RequiredLength = 7;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+                opt.User.RequireUniqueEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
+                opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+            })
+           .AddEntityFrameworkStores<AplicationContext>()
+           .AddDefaultTokenProviders()
+           .AddTokenProvider<EmailConfirmationTokenProvider<User>>("emailconfirmation"); ;
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+              opt.TokenLifespan = TimeSpan.FromHours(2));
+
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromDays(3));
 
             services.AddAutoMapper(typeof(Startup));
+
+            var emailConfig = Configuration
+               .GetSection("EmailConfiguration")
+               .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
