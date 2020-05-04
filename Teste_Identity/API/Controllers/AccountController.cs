@@ -1,5 +1,6 @@
 ﻿using Auth.EmailService.Interfaces;
 using Auth.EmailService.Services;
+using Auth.MacorattiEmailService;
 using Auth.Models;
 using Auth.ViewModels;
 using AutoMapper;
@@ -18,14 +19,17 @@ namespace API.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly IEmailSenderMacoratti _emailSenderMacoratti;
 
         public AccountController(IMapper mapper, UserManager<User> userManager, 
-            SignInManager<User> signInManager, IEmailSender emailSender)
+            SignInManager<User> signInManager, IEmailSender emailSender,
+            IEmailSenderMacoratti emailSenderMacoratti)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            _emailSenderMacoratti = emailSenderMacoratti;
         }
 
         [Route("register")]
@@ -50,7 +54,9 @@ namespace API.Controllers
             var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
 
             var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationLink, null);
-            await _emailSender.SendEmailAsync(message);
+            // await _emailSender.SendEmailAsync(message);
+
+            await _emailSenderMacoratti.SendEmailAsync(user.Email, "Confirmation email link", confirmationLink);
 
             //adicionando roles
             await _userManager.AddToRoleAsync(user, "Visitor");

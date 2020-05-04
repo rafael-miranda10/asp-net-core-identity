@@ -2,6 +2,7 @@
 using Auth.CustomTokenProviders;
 using Auth.EmailService.Interfaces;
 using Auth.EmailService.Services;
+using Auth.MacorattiEmailService;
 using Auth.Mapping;
 using Auth.Models;
 using AutoMapper;
@@ -61,6 +62,10 @@ namespace API
                .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSender, EmailSender>();
+
+            //MACORATTI
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddTransient<IEmailSenderMacoratti, AuthMessageSender>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
