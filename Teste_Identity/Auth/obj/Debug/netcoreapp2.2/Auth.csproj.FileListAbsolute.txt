@@ -1,0 +1,11 @@
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\bin\Debug\netcoreapp2.2\Auth.deps.json
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\bin\Debug\netcoreapp2.2\Auth.runtimeconfig.json
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\bin\Debug\netcoreapp2.2\Auth.runtimeconfig.dev.json
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\bin\Debug\netcoreapp2.2\Auth.dll
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\bin\Debug\netcoreapp2.2\Auth.pdb
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.csprojAssemblyReference.cache
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.csproj.CoreCompileInputs.cache
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.AssemblyInfoInputs.cache
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.AssemblyInfo.cs
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.dll
+C:\Users\rafael.miranda\source\repos\Teste_Identity\Auth\obj\Debug\netcoreapp2.2\Auth.pdb
